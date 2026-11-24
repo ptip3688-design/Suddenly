@@ -1,0 +1,6 @@
+{
+  "name": "Jarvis AI",
+  "description": "Futuristic personal AI assistant with voice conversation, Gemini chat, AI image studio, video editor, coding helper, and personal organizer.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

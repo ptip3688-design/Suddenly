@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Jarvis AI</string>
+    <string name="sign_in_google">Sign in with Google</string>
+    <string name="nav_assistant">Assistant</string>
+    <string name="nav_image_studio">Image Studio</string>
+    <string name="nav_video_studio">Video Studio</string>
+    <string name="nav_workspace">Workspace</string>
+    <string name="auth_subtitle">Personal AI Assistant • Gemini Powered</string>
+    <string name="mic_permission_needed">Microphone permission is required for voice commands and Hey Jarvis mode.</string>
+    <string name="location_permission_needed">Approximate location permission lets Jarvis fetch local weather.</string>
+</resources>

@@ -1,0 +1,133 @@
+{
+  "entities": {
+    "Conversation": {
+      "title": "Conversation",
+      "description": "A chat conversation thread between the user and Jarvis AI.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner Firebase Auth UID." },
+        "title": { "type": "string", "description": "Conversation title." },
+        "modelName": { "type": "string", "description": "Gemini model identifier used." },
+        "lastMessagePreview": { "type": "string", "description": "Preview of the latest message." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp when created." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp when updated." }
+      },
+      "required": ["userId", "title", "modelName", "lastMessagePreview", "createdAt", "updatedAt"]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "A single message in a Jarvis AI conversation.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner Firebase Auth UID." },
+        "role": { "type": "string", "enum": ["user", "model"], "description": "Message sender role." },
+        "text": { "type": "string", "description": "Message text content." },
+        "attachmentLabel": { "type": "string", "description": "Optional label for attached image or file." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp when created." }
+      },
+      "required": ["userId", "role", "text", "createdAt"]
+    },
+    "TaskItem": {
+      "title": "TaskItem",
+      "description": "A personal to-do or reminder item managed by Jarvis AI.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner Firebase Auth UID." },
+        "title": { "type": "string", "description": "Task title." },
+        "notes": { "type": "string", "description": "Optional task notes." },
+        "dueLabel": { "type": "string", "description": "Optional due date/time label." },
+        "priority": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH"], "description": "Priority level." },
+        "done": { "type": "boolean", "description": "Completion state." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp when created." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp when updated." }
+      },
+      "required": ["userId", "title", "priority", "done", "createdAt", "updatedAt"]
+    },
+    "NoteItem": {
+      "title": "NoteItem",
+      "description": "A personal note or study summary saved by the user.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner Firebase Auth UID." },
+        "title": { "type": "string", "description": "Note title." },
+        "content": { "type": "string", "description": "Note body text." },
+        "tag": { "type": "string", "description": "Category tag." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp when created." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp when updated." }
+      },
+      "required": ["userId", "title", "content", "tag", "createdAt", "updatedAt"]
+    },
+    "ScheduleItem": {
+      "title": "ScheduleItem",
+      "description": "A scheduled block or event in the user's daily planner.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner Firebase Auth UID." },
+        "title": { "type": "string", "description": "Schedule item title." },
+        "timeSlot": { "type": "string", "description": "Time slot label." },
+        "dateLabel": { "type": "string", "description": "Date label." },
+        "category": { "type": "string", "description": "Event category." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp when created." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp when updated." }
+      },
+      "required": ["userId", "title", "timeSlot", "dateLabel", "category", "createdAt", "updatedAt"]
+    },
+    "MemoryFact": {
+      "title": "MemoryFact",
+      "description": "A user preference or fact remembered by Jarvis AI with permission.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner Firebase Auth UID." },
+        "fact": { "type": "string", "description": "Remembered user preference or fact." },
+        "active": { "type": "boolean", "description": "Whether this memory is active in context." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp when created." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp when updated." }
+      },
+      "required": ["userId", "fact", "active", "createdAt", "updatedAt"]
+    },
+    "UserPreferences": {
+      "title": "UserPreferences",
+      "description": "User settings for Jarvis AI assistant behavior.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner Firebase Auth UID." },
+        "memoryEnabled": { "type": "boolean", "description": "Whether assistant memory is enabled." },
+        "voiceAutoSpeak": { "type": "boolean", "description": "Whether replies are spoken aloud automatically." },
+        "preferredLanguage": { "type": "string", "description": "Preferred assistant language." },
+        "preferredModel": { "type": "string", "description": "Preferred Gemini model ID." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp when updated." }
+      },
+      "required": ["userId", "memoryEnabled", "voiceAutoSpeak", "preferredLanguage", "preferredModel", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/conversations/{conversationId}": {
+      "schema": { "$ref": "#/entities/Conversation" },
+      "description": "User-owned Jarvis AI conversation threads."
+    },
+    "/users/{userId}/conversations/{conversationId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/ChatMessage" },
+      "description": "Messages belonging to a user's Jarvis AI conversation."
+    },
+    "/users/{userId}/tasks/{taskId}": {
+      "schema": { "$ref": "#/entities/TaskItem" },
+      "description": "User-owned tasks and reminders."
+    },
+    "/users/{userId}/notes/{noteId}": {
+      "schema": { "$ref": "#/entities/NoteItem" },
+      "description": "User-owned notes and study summaries."
+    },
+    "/users/{userId}/schedules/{scheduleId}": {
+      "schema": { "$ref": "#/entities/ScheduleItem" },
+      "description": "User-owned daily schedule blocks."
+    },
+    "/users/{userId}/memories/{memoryId}": {
+      "schema": { "$ref": "#/entities/MemoryFact" },
+      "description": "User-approved AI memory facts."
+    },
+    "/users/{userId}/preferences/{prefId}": {
+      "schema": { "$ref": "#/entities/UserPreferences" },
+      "description": "User assistant preferences."
+    }
+  }
+}
